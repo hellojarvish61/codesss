@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Auth Website</title>
+    </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"></script>
+
+    <script>
+        async function signup(){
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementByIdI("signup-password").value;
+
+        await axios.post("http://localhost:3000/signup",{
+                username : username,
+                password : password
+            });
+            alert("you are signed upp")
+        }
+
+        async function signin(){
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementByIdI("signup-password").value;
+
+       const response =  await axios.post("http://localhost:3000/signin",{
+                username : username,
+                password : password
+            });
+            localStorage.setItem("token",response.data.token);
+            alert("you are signed in")
+        }
+
+        async function getUserInfomation(){
+            axios.get("http://localhsot:3000/me",{
+                headers:{
+                    token: localStorage.getItem("token")
+                }
+            })
+        }
+        getUserInfomation(); 
+    </script>
+    <body>
+        <div>
+            Signup
+            <input id = "signup-username" type="text"name ="username"
+            placeholder="username">
+            <input id = " signup=password" type="password"name ="password"
+            placeholder="password">
+            <button oneclick="signup()">Submit</button>
+        </div>
+
+        <div>
+            Signin
+            <input id ="signin-username" type="text" name="username"
+            placeholder="username">
+            <input id = "signin-password" type="password" name="password"
+            placeholder="password">
+            <button oneclick="signin()">Submit</button>
+
+        <div>
+            User infromation:
+            <div id = "infromation"></div>
+        </div>
+
+        <div>
+            <button oneclick = "logout()">logout</button>
+        </div>
+        </div>
+    </body>
+</html>
